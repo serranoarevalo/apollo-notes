@@ -1,5 +1,7 @@
 import React from "react";
+import { Query } from "react-apollo";
 import Editor from "../../Components/Editor";
+import { GET_NOTE } from "../../sharedQueries";
 
 export default class Edit extends React.Component {
   render() {
@@ -9,12 +11,18 @@ export default class Edit extends React.Component {
       }
     } = this.props;
     return (
-      <Editor
-        title={"Something"}
-        content={"# Something else"}
-        onSave={this._editNote}
-        id={id}
-      />
+      <Query query={GET_NOTE} variables={{ id }}>
+        {({ data }) =>
+          data.note ? (
+            <Editor
+              title={data.note.title}
+              content={data.note.content}
+              onSave={this._editNote}
+              id={id}
+            />
+          ) : null
+        }
+      </Query>
     );
   }
   _editNote = () => {

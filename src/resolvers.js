@@ -1,17 +1,9 @@
 import { NOTE_FRAGMENT } from "./fragments";
 import { GET_NOTES } from "./sharedQueries";
+import { saveNotes, restoreNotes } from "./offline";
 
 export const defaults = {
-  notes: [
-    {
-      __typename: "Note",
-      title: "first",
-      content: "second",
-      id: 1,
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    }
-  ]
+  notes: restoreNotes()
 };
 export const resolvers = {
   Query: {
@@ -37,6 +29,7 @@ export const resolvers = {
           notes: [newNote, ...notes]
         }
       });
+      saveNotes(cache);
       return null;
     },
     updateNote: (_, { title, content, id }, { cache, getCacheKey }) => {
@@ -48,9 +41,11 @@ export const resolvers = {
         data: {
           ...note,
           title,
-          content
+          content,
+          updatedAt: Date.now()
         }
       });
+      saveNotes(cache);
       return null;
     }
   }

@@ -3,17 +3,7 @@ import styled from "styled-components";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
 import { ReactComponent as Plus } from "../../Components/plus.svg";
-import gql from "graphql-tag";
-
-const GET_NOTES = gql`
-  {
-    notes @client {
-      id
-      title
-      updatedAt
-    }
-  }
-`;
+import { GET_NOTES } from "../../sharedQueries";
 
 const Header = styled.div`
   margin-bottom: 50px;

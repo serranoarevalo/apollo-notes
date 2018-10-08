@@ -7,6 +7,9 @@ const TitleInput = styled(TextareaAutosize)`
   font-size: 50px;
   font-weight: 600;
   width: 100%;
+  &::placeholder {
+    font-weight: 600;
+  }
 `;
 
 const ContentPreview = styled.div`
@@ -72,6 +75,7 @@ export default class Editor extends React.Component {
   };
   _onSave = () => {
     const { onSave } = this.props;
-    onSave();
+    const { title, content, id } = this.state;
+    onSave(title, content, id);
   };
 }

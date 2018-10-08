@@ -13,4 +13,8 @@ injectGlobal`
         color:var(--blackColor);
         padding:0px 100px;
     }
+    a {
+        color:inherit;
+        text-decoration:none;
+    }
 `;

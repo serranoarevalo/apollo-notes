@@ -14,7 +14,11 @@ export const restoreNotes = cache => {
   const notes = localStorage.getItem("notes");
   try {
     const parsedNotes = JSON.parse(notes);
-    return parsedNotes;
+    if (parsedNotes !== null) {
+      return parsedNotes;
+    } else {
+      return [];
+    }
   } catch (error) {
     console.log(error);
     return [];

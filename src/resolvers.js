@@ -2,7 +2,16 @@ import { NOTE_FRAGMENT } from "./fragments";
 import { GET_NOTES } from "./sharedQueries";
 
 export const defaults = {
-  notes: []
+  notes: [
+    {
+      __typename: "Note",
+      title: "first",
+      content: "second",
+      id: 1,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    }
+  ]
 };
 export const resolvers = {
   Query: {
@@ -25,10 +34,24 @@ export const resolvers = {
       };
       cache.writeData({
         data: {
-          notes: [...notes, newNote]
+          notes: [newNote, ...notes]
         }
       });
-      return newNote;
+      return null;
+    },
+    updateNote: (_, { title, content, id }, { cache, getCacheKey }) => {
+      const noteId = getCacheKey({ __typename: "Note", id });
+      const note = cache.readFragment({ fragment: NOTE_FRAGMENT, id: noteId });
+      cache.writeFragment({
+        id: noteId,
+        fragment: NOTE_FRAGMENT,
+        data: {
+          ...note,
+          title,
+          content
+        }
+      });
+      return null;
     }
   }
 };
@@ -44,7 +67,7 @@ export const typeDefs = [
         note(id: Int!): Note
     }
     type Mutation {
-      addNote(title:String!, content:String!): Note
+      addNote(title:String!, content:String!)
     }
     type Note{
         id: Int!

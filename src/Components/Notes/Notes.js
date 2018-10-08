@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
+import { ReactComponent as Plus } from "../plus.svg";
 
 import gql from "graphql-tag";
 
@@ -24,6 +25,19 @@ const Title = styled.h1`
   font-weight: 600;
   margin: 0;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled.div`
+  margin-left: 10px;
+  transform: scale(0.8);
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
 const Subtitle = styled.h2`
@@ -59,7 +73,12 @@ class App extends Component {
     return (
       <>
         <Header>
-          <Title>Nomad Notes</Title>
+          <Title>
+            Nomad Notes{" "}
+            <Button>
+              <Plus />
+            </Button>
+          </Title>
           <Subtitle>Taking notes while we learn.</Subtitle>
         </Header>
         <Notes>

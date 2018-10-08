@@ -7,7 +7,6 @@ const TitleInput = styled(TextareaAutosize)`
   font-size: 50px;
   font-weight: 600;
   width: 100%;
-  margin-bottom: 50px;
 `;
 
 const ContentPreview = styled.div`
@@ -21,21 +20,36 @@ const ContentInput = styled(TextareaAutosize)`
   margin-top: 15px;
 `;
 
-export default class Add extends React.Component {
-  state = {
-    title: "",
-    content: ""
-  };
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+const Button = styled.button``;
+
+export default class Editor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: props.title || "",
+      content: props.content || "",
+      id: props.id || null
+    };
+  }
   render() {
     const { title, content } = this.state;
     return (
       <>
-        <TitleInput
-          value={title}
-          onChange={this._onInputChange}
-          placeholder={"Untitled..."}
-          name={"title"}
-        />
+        <TitleContainer>
+          <TitleInput
+            value={title}
+            onChange={this._onInputChange}
+            placeholder={"Untitled..."}
+            name={"title"}
+          />
+          <Button onClick={this._onSave}>Save</Button>
+        </TitleContainer>
         <ContentPreview>
           <ContentInput
             value={content}
@@ -43,11 +57,7 @@ export default class Add extends React.Component {
             placeholder={"# This supports markdown!"}
             name={"content"}
           />
-          <MarkdownRenderer
-            markdown={content}
-            skipHtml={true}
-            className={"markdown"}
-          />
+          <MarkdownRenderer markdown={content} className={"markdown"} />
         </ContentPreview>
       </>
     );
@@ -59,5 +69,9 @@ export default class Add extends React.Component {
     this.setState({
       [name]: value
     });
+  };
+  _onSave = () => {
+    const { onSave } = this.props;
+    onSave();
   };
 }

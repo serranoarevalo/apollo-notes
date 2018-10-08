@@ -41,4 +41,18 @@ injectGlobal`
     .markdown a{
         text-decoration:underline;
     }
+    button{
+        appearance:none;
+        border:none;
+        background-color:transparent;
+        font-weight:600;
+        font-size:15px;
+        cursor:pointer;
+        border:2.5px solid var(--blackColor);
+        &:focus,
+        &:active{
+            outline:none
+        }
+
+    }
 `;

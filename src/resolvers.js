@@ -1,3 +1,6 @@
+import gql from "graphql-tag";
+import { NOTE_FRAGMENT } from "./fragments";
+
 export const defaults = {
   notes: [
     {
@@ -18,7 +21,15 @@ export const defaults = {
     }
   ]
 };
-export const resolvers = {};
+export const resolvers = {
+  Query: {
+    note: (_, variables, { cache, getCacheKey }) => {
+      const id = getCacheKey({ __typename: "Note", id: variables.id });
+      const note = cache.readFragment({ fragment: NOTE_FRAGMENT, id });
+      return note;
+    }
+  }
+};
 export const typeDefs = [
   `
     schema { 
@@ -26,7 +37,7 @@ export const typeDefs = [
     }
     type Query {
         notes: [Note]!
-        note: Note
+        note(id: Int!): Note
     }
     type Note{
         id: String!

@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
-import { ReactComponent as Plus } from "../plus.svg";
-
+import { ReactComponent as Plus } from "../../Components/plus.svg";
 import gql from "graphql-tag";
 
 const GET_NOTES = gql`
@@ -42,6 +41,7 @@ const Button = styled.div`
 
 const Subtitle = styled.h2`
   color: #a2a19e;
+  font-weight: 400;
 `;
 
 const Notes = styled.div`

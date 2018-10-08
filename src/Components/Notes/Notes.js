@@ -17,7 +17,7 @@ const GET_NOTES = gql`
 `;
 
 const Header = styled.div`
-  padding: 50px 0px;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.h1`
@@ -74,10 +74,12 @@ class App extends Component {
       <>
         <Header>
           <Title>
-            Nomad Notes{" "}
-            <Button>
-              <Plus />
-            </Button>
+            Nomad Notes
+            <Link to={"/add"}>
+              <Button>
+                <Plus />
+              </Button>
+            </Link>
           </Title>
           <Subtitle>Taking notes while we learn.</Subtitle>
         </Header>
@@ -85,7 +87,7 @@ class App extends Component {
           <Query query={GET_NOTES}>
             {({ data }) =>
               data.notes.map(note => (
-                <Link to={`/${note.id}`} key={note.id}>
+                <Link to={`/note/${note.id}`} key={note.id}>
                   <Note>
                     <NoteTitle>{note.title}</NoteTitle>
                   </Note>
